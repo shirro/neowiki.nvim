@@ -1,7 +1,8 @@
 -- lua/neowiki/util.lua
 local M = {}
 local is_windows = vim.fn.has("win32") == 1
-
+local is_case_insensitive = (vim.loop.os_uname().sysname == "Windows_NT")
+  or (vim.loop.os_uname().sysname == "Darwin")
 ---
 -- Filters a table by applying a predicate function to each item.
 -- This is a pure function that does not depend on any external state or modules.
@@ -184,7 +185,12 @@ M.normalize_path_for_comparison = function(path)
   if not path then
     return ""
   end
-  return normalize_path(path):lower()
+  local normalized = normalize_path(path)
+  if is_case_insensitive then
+    return normalized:lower()
+  else
+    return normalized
+  end
 end
 
 ---
