@@ -3,24 +3,6 @@ local M = {}
 local is_windows = vim.fn.has("win32") == 1
 
 ---
--- Recursively merges two tables. Values in `override` take precedence.
--- @param base (table): The table to merge into.
--- @param override (table): The table with values to merge from.
--- @return (table): A new table containing the merged result.
---
-M.deep_merge = function(base, override)
-  local result = vim.deepcopy(base)
-  for k, v in pairs(override) do
-    if type(v) == "table" and type(result[k]) == "table" and not vim.islist(v) then
-      result[k] = M.deep_merge(result[k], v)
-    else
-      result[k] = v
-    end
-  end
-  return result
-end
-
----
 -- Filters a table by applying a predicate function to each item.
 -- This is a pure function that does not depend on any external state or modules.
 -- @param list (table): The list to filter.

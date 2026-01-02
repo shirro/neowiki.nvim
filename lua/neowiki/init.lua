@@ -135,7 +135,7 @@ end
 M.setup = function(opts)
   opts = opts or {}
   -- Merge user config into the default config.
-  local local_config = util.deep_merge(config, opts)
+  local local_config = vim.tbl_deep_extend("force", config, opts)
   for k, v in pairs(local_config) do
     config[k] = v
   end
