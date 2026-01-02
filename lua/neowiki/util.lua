@@ -297,6 +297,11 @@ M.process_link_target = function(target, ext)
   end
   local clean_target = target:match("^%s*(.-)%s*$")
 
+  -- Strip wrapping angle brackets if present (e.g. <filename>)
+  if clean_target:sub(1, 1) == "<" and clean_target:sub(-1) == ">" then
+    clean_target = clean_target:sub(2, -2)
+  end
+
   -- If it's a web link, return it as-is without modification.
   if M.is_web_link(clean_target) then
     return clean_target
@@ -308,7 +313,7 @@ M.process_link_target = function(target, ext)
     clean_target = clean_target .. ext
   end
 
-  -- NEW: Prepend "./" if it's not already a relative path.
+  -- Prepend "./" if it's not already a relative path.
   if not clean_target:match("^%./") then
     clean_target = "./" .. clean_target
   end
