@@ -28,7 +28,7 @@ M.open_wiki_floating = api.open_wiki_floating
 -- @return (string): The default wiki path.
 --
 local function get_default_path()
-  return vim.fs.joinpath(vim.loop.os_homedir(), "wiki")
+  return util.join_path(vim.loop.os_homedir(), "wiki")
 end
 
 ---
