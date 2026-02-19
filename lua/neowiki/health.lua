@@ -70,10 +70,9 @@ M.check = function()
     info("Link detection will use Regex fallback (less robust).")
   else
     ok("nvim-treesitter: Installed")
-    local parsers = require("nvim-treesitter.parsers")
     local required_parsers = { "markdown", "markdown_inline" }
     for _, parser in ipairs(required_parsers) do
-      if parsers.has_parser(parser) then
+      if vim.treesitter.language.add(parser) ~= nil then
         ok(string.format(" - Parser '%s': Installed", parser))
       else
         warn(string.format(" - Parser '%s': Missing", parser))
